@@ -524,6 +524,21 @@ void load_attribute (const H5::H5Location &h5obj, const std::string &name, const
     internal::_load(dataset, mat);
 }
 
+template <typename T>
+void load_scalar_attribute (const H5::H5Location &h5obj, const std::string &name, T &value)
+{
+    const H5::Attribute att = h5obj.openAttribute(name);
+    const H5::DataType * const datatype = DatatypeSpecialization<T>::get();
+    att.read(*datatype, &value);
+}
+
+void load_scalar_attribute (const H5::H5Location &h5obj, const std::string &name, std::string &value)
+{
+    const H5::Attribute att = h5obj.openAttribute(name);
+    const H5::DataType * const datatype = DatatypeSpecialization<const char *>::get();
+    att.read(*datatype, value);
+}
+
 } // namespace EigenHDF5
 
 #endif
