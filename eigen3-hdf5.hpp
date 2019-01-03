@@ -323,7 +323,7 @@ namespace internal
 }
 
 template <typename T>
-void save_scalar_attribute (const H5::H5Object &h5obj, const std::string &name, const T &value)
+void save_scalar_attribute (const Eigen3Hdf5_H5Location &h5obj, const std::string &name, const T &value)
 {
     const H5::DataType * const datatype = DatatypeSpecialization<T>::get();
     H5::DataSpace dataspace(H5S_SCALAR);
@@ -538,14 +538,14 @@ void load_attribute (const Eigen3Hdf5_H5Location &h5obj, const std::string &name
 }
 
 template <typename T>
-void load_scalar_attribute (const H5::H5Object &h5obj, const std::string &name, T &value)
+void load_scalar_attribute (const Eigen3Hdf5_H5Location &h5obj, const std::string &name, T &value)
 {
     const H5::Attribute att = h5obj.openAttribute(name);
     const H5::DataType * const datatype = DatatypeSpecialization<T>::get();
     att.read(*datatype, &value);
 }
 
-void load_scalar_attribute (const H5::H5Object &h5obj, const std::string &name, std::string &value)
+void load_scalar_attribute (const Eigen3Hdf5_H5Location &h5obj, const std::string &name, std::string &value)
 {
     const H5::Attribute att = h5obj.openAttribute(name);
     const H5::DataType * const datatype = DatatypeSpecialization<const char *>::get();
